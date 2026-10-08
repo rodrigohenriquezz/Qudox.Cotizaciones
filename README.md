@@ -3,7 +3,7 @@
 Sitio de una sola página que QUDOX usa en reuniones con productoras de
 Honduras, Nicaragua y Costa Rica.
 
-**En vivo:** (pegar acá la URL cuando esté conectado)
+**En vivo:** https://qudox-cotizaciones.pages.dev/
 
 ---
 
