@@ -58,6 +58,10 @@ historial y restaurar cualquier versión anterior.
 
 ## Importante
 
-Este repo debe mantenerse **privado**. El sitio contiene tarifas de talento,
-nombres de cuentas y entregables por país. En un repo público eso queda
-indexado y visible para cualquiera.
+El sitio es público e indexable a propósito: QUDOX trabaja con política de
+precio publicado ("show the price, and you decide"), para que las productoras
+evalúen las tarifas antes de mandar su cotización. `robots.txt` y
+`sitemap.xml` están en la raíz para Google.
+
+El repo sí debe mantenerse **privado**: el historial de commits guarda
+versiones anteriores y notas internas que no son parte de lo publicado.
