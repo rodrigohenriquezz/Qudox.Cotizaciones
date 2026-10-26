@@ -179,6 +179,8 @@ table.d .dd{color:#6B6F6C;font-size:10.5px;margin-top:2px}
       <div id="marcas"></div>
       <section class="blk"><label class="f" style="font-size:14px;color:var(--carbon)"><span>Notas para QUDOX <span class="h">· Opcional: condiciones, disponibilidad, lo que quieras aclarar.</span></span>
         <textarea class="in" id="notas" placeholder="Ej.: Tenemos disponibilidad para coberturas de fin de semana."></textarea></label></section>
+      <section class="blk" style="margin-top:18px"><label class="f" style="font-size:14px;color:var(--carbon)"><span>Tus términos y condiciones <span class="h">· Opcional: anticipo, cancelaciones, reprogramaciones, horas extra, derechos de uso, lo que manejés.</span></span>
+        <textarea class="in" id="terminos" style="min-height:140px" placeholder="Ej.:&#10;· Reprogramaciones con menos de 24 h de aviso tienen un cargo del 50 %.&#10;· Horas extra de cobertura: $40 por hora.&#10;· El material en crudo se resguarda por 3 meses."></textarea></label></section>
     </section>
   </div>
 
@@ -218,7 +220,7 @@ const PAISES={
 };
 const CAMPOS=[["productora","Productora","Nombre comercial"],["contacto","Persona de contacto",""],["correo","Correo",""],["whatsapp","WhatsApp","Con código de país"],["fiscal","__FISCAL__",""],["web","Sitio web o portafolio","Opcional"],["numero","N.° de cotización","Tu numeración"],["fecha","Fecha",""],["vigencia","Vigencia (días)","Cuántos días respetás estos precios"],["imp","__IMP__ (%)","Dejalo vacío si tus precios ya lo incluyen"]];
 const KEY="qudox-cotizacion-v1";
-let S={pais:"honduras",datos:{},precios:{},logo:"",notas:""};
+let S={pais:"honduras",datos:{},precios:{},logo:"",notas:"",terminos:""};
 try{const g=JSON.parse(localStorage.getItem(KEY)||"null");if(g&&PAISES[g.pais])S=Object.assign(S,g)}catch(e){}
 const qp=new URLSearchParams(location.search).get("pais");if(qp&&PAISES[qp])S.pais=qp;
 if(!S.datos.fecha)S.datos.fecha=new Date().toISOString().slice(0,10);
@@ -310,7 +312,8 @@ function doc(){
       <div class="d-tot"><div><span>Subtotal plan mensual</span><b>${usd(c.sub)}</b></div><div><span>${p.imp} (${c.ip} %)</span><b>${usd(c.imp)}</b></div><div class="gran"><span>Total plan mensual</span><b>${usd(c.tot)}</b></div></div>
       <div class="d-sec"><h4>Costos adicionales · se cobran solo cuando se usan</h4><table class="d"><thead><tr><th>Concepto</th><th class="r">Unidad</th><th class="r">Precio</th></tr></thead><tbody>${ad}</tbody></table></div>
       ${S.notas?`<div class="d-sec"><h4>Notas de la productora</h4><div class="d-notas">${esc(S.notas)}</div></div>`:""}
-      <div class="d-pie"><span>Pago a 45 días calendario contra entrega de factura en físico. Servicio mes a mes, sin contrato por plazo fijo.</span><span>Plantilla QUDOX · qudox-cotizaciones.pages.dev</span></div>
+      ${S.terminos?`<div class="d-sec"><h4>Términos y condiciones de la productora</h4><div class="d-notas">${esc(S.terminos)}</div></div>`:""}
+      <div class="d-pie"><span>Condiciones de QUDOX: pago a 45 días calendario contra entrega de factura en físico. Servicio mes a mes, sin contrato por plazo fijo.</span><span>Plantilla QUDOX · qudox-cotizaciones.pages.dev</span></div>
     </article>`}).join("");
 }
 function todo(){pintarPaises();pintarCampos();pintarMarcas();resumen();doc()}
@@ -324,8 +327,9 @@ fi.onchange=()=>setLogo(fi.files[0]);
 drop.addEventListener("drop",ev=>setLogo(ev.dataTransfer.files[0]));
 $("#logo-quitar").onclick=()=>{S.logo="";fi.value="";guardar();verLogo();doc()};
 $("#notas").value=S.notas||"";$("#notas").oninput=e=>{S.notas=e.target.value;guardar();doc()};
+$("#terminos").value=S.terminos||"";$("#terminos").oninput=e=>{S.terminos=e.target.value;guardar();doc()};
 $("#pdf").onclick=()=>{const prev=document.title;const n=(S.datos.productora||"productora").trim().replace(/\s+/g,"-");document.title=`Cotizacion-QUDOX-${PAISES[S.pais].nombre.replace(/\s+/g,"-")}-${n}`;window.print();setTimeout(()=>document.title=prev,500)};
-$("#borrar").onclick=()=>{if(!confirm("¿Borrar todo lo que llenaste?"))return;S={pais:S.pais,datos:{fecha:new Date().toISOString().slice(0,10),vigencia:"30"},precios:{},logo:"",notas:""};guardar();$("#notas").value="";verLogo();todo()};
+$("#borrar").onclick=()=>{if(!confirm("¿Borrar todo lo que llenaste?"))return;S={pais:S.pais,datos:{fecha:new Date().toISOString().slice(0,10),vigencia:"30"},precios:{},logo:"",notas:"",terminos:""};guardar();$("#notas").value="";$("#terminos").value="";verLogo();todo()};
 verLogo();todo();
 })();
 </script>
