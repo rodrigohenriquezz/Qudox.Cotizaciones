@@ -11,7 +11,7 @@ Honduras, Nicaragua y Costa Rica.
 
 | Archivo | Qué es |
 |---|---|
-| `plantilla-cotizacion-qudox-*.xlsx` | Plantillas de cotización por país que se descargan desde la sección Cotización. |
+| `cotizar.html` | Plantilla web de cotización (`/cotizar`). La productora elige país, sube logo, llena precios y descarga el PDF. Lo que escribe se guarda solo en su navegador. |
 | `index.html` | El sitio completo. Un solo archivo con todo adentro: código, estilos, tipografías y logos. No depende de nada externo salvo los videos y fotos, que viven en Google Drive. |
 
 No hay build. El servidor sirve `index.html` tal cual.
